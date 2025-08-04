@@ -57,7 +57,7 @@ export default function ContactSection() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">Contactez-nous</h2>
             <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
-            <p className="text-lg text-slate-600">Nous sommes là pour répondre à vos questions</p>
+            <p className="text-lg text-slate-600">Nous sommes là pour répondre à vos questions..</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
@@ -85,8 +85,7 @@ export default function ContactSection() {
                   <div>
                     <h4 className="font-semibold text-navy mb-1">Email</h4>
                     <p className="text-slate-600">
-                      contact@helptooldest.org<br />
-                      info@hold-cameroon.org
+                      helptooldestasso@gmail.com<br />
                     </p>
                   </div>
                 </div>
@@ -98,8 +97,9 @@ export default function ContactSection() {
                   <div>
                     <h4 className="font-semibold text-navy mb-1">Téléphone</h4>
                     <p className="text-slate-600">
-                      +237 6XX XXX XXX<br />
-                      +237 6XX XXX XXX
+                      +237 695 842 668<br />
+                      +237 679 395 853<br />
+                      +237 655 215 8222
                     </p>
                   </div>
                 </div>
