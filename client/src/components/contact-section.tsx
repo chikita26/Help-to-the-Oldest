@@ -1,9 +1,22 @@
-import { MapPin, Mail, Phone, Facebook, Twitter, Instagram } from "lucide-react";
+import { MapPin, Mail, Phone, Facebook, Twitter, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -21,8 +34,8 @@ export default function ContactSection() {
       lastName: "",
       email: "",
       subject: "",
-      message: ""
-    }
+      message: "",
+    },
   });
 
   const contactMutation = useMutation({
@@ -33,7 +46,8 @@ export default function ContactSection() {
     onSuccess: () => {
       toast({
         title: "Message envoyé !",
-        description: "Merci pour votre message. Nous vous répondrons dans les plus brefs délais."
+        description:
+          "Merci pour votre message. Nous vous répondrons dans les plus brefs délais.",
       });
       form.reset();
     },
@@ -41,9 +55,10 @@ export default function ContactSection() {
       toast({
         variant: "destructive",
         title: "Erreur",
-        description: "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer."
+        description:
+          "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer.",
       });
-    }
+    },
   });
 
   const onSubmit = (data: InsertContact) => {
@@ -55,15 +70,21 @@ export default function ContactSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">Contactez-nous</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+              Contactez-nous
+            </h2>
             <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
-            <p className="text-lg text-slate-600">Nous sommes là pour répondre à vos questions..</p>
+            <p className="text-lg text-slate-600">
+              Nous sommes là pour répondre à vos questions..
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div>
-              <h3 className="text-2xl font-semibold text-navy mb-8">Informations de Contact</h3>
+              <h3 className="text-2xl font-semibold text-navy mb-8">
+                Informations de Contact
+              </h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -72,7 +93,8 @@ export default function ContactSection() {
                   <div>
                     <h4 className="font-semibold text-navy mb-1">Adresse</h4>
                     <p className="text-slate-600">
-                      Yaoundé, Cameroun<br />
+                      Yaoundé, Cameroun
+                      <br />
                       Mbalmayo, Département du Nyong et So'o
                     </p>
                   </div>
@@ -85,7 +107,8 @@ export default function ContactSection() {
                   <div>
                     <h4 className="font-semibold text-navy mb-1">Email</h4>
                     <p className="text-slate-600">
-                      helptooldestasso@gmail.com<br />
+                      helptooldestasso@gmail.com
+                      <br />
                     </p>
                   </div>
                 </div>
@@ -97,9 +120,11 @@ export default function ContactSection() {
                   <div>
                     <h4 className="font-semibold text-navy mb-1">Téléphone</h4>
                     <p className="text-slate-600">
-                      +237 695 842 668<br />
-                      +237 679 395 853<br />
-                      +237 655 215 8222
+                      +237 695 842 668
+                      <br />
+                      +237 679 395 853
+                      <br />
+                      +237 655 215 822
                     </p>
                   </div>
                 </div>
@@ -109,29 +134,29 @@ export default function ContactSection() {
               <div className="mt-8">
                 <h4 className="font-semibold text-navy mb-4">Suivez-nous</h4>
                 <div className="flex space-x-4">
-                  <a 
-                    href="https://www.facebook.com/61564113427822/" 
+                  <a
+                    href="https://www.facebook.com/61564113427822/"
                     className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <Facebook size={20} />
                   </a>
-                  <a 
-                    href="https://x.com/AssociationHOLD" 
+                  <a
+                    href="https://x.com/AssociationHOLD"
                     className="w-10 h-10 bg-sky-500 rounded-full flex items-center justify-center text-white hover:bg-sky-600 transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <Twitter size={20} />
                   </a>
-                  <a 
-                    href="https://www.instagram.com/associationhumanitairehold" 
+                  <a
+                    href="https://www.linkedin.com/company/association-humanitaire-help-to-oldest-hold"
                     className="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center text-white hover:bg-pink-700 transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Instagram size={20} />
+                    <Linkedin size={20} />
                   </a>
                 </div>
               </div>
@@ -139,9 +164,14 @@ export default function ContactSection() {
 
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-xl shadow-sm">
-              <h3 className="text-2xl font-semibold text-navy mb-6">Envoyez-nous un message</h3>
+              <h3 className="text-2xl font-semibold text-navy mb-6">
+                Envoyez-nous un message
+              </h3>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   <div className="grid md:grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
@@ -191,17 +221,28 @@ export default function ContactSection() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Sujet</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Sélectionnez un sujet" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="volontariat">Volontariat</SelectItem>
-                            <SelectItem value="don">Don et financement</SelectItem>
-                            <SelectItem value="partenariat">Partenariat</SelectItem>
-                            <SelectItem value="information">Demande d'information</SelectItem>
+                            <SelectItem value="volontariat">
+                              Volontariat
+                            </SelectItem>
+                            <SelectItem value="don">
+                              Don et financement
+                            </SelectItem>
+                            <SelectItem value="partenariat">
+                              Partenariat
+                            </SelectItem>
+                            <SelectItem value="information">
+                              Demande d'information
+                            </SelectItem>
                             <SelectItem value="autre">Autre</SelectItem>
                           </SelectContent>
                         </Select>
@@ -224,12 +265,14 @@ export default function ContactSection() {
                     )}
                   />
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-primary hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors"
                     disabled={contactMutation.isPending}
                   >
-                    {contactMutation.isPending ? "Envoi en cours..." : "Envoyer le Message"}
+                    {contactMutation.isPending
+                      ? "Envoi en cours..."
+                      : "Envoyer le Message"}
                   </Button>
                 </form>
               </Form>

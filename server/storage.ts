@@ -1,95 +1,64 @@
-import { type User, type InsertUser, type Contact, type InsertContact, type Volunteer, type InsertVolunteer, type Donation, type InsertDonation } from "@shared/schema";
-import { randomUUID } from "crypto";
+import { type User, type InsertUser, type Contact, type InsertContact, type Volunteer, type InsertVolunteer, type Donation, type InsertDonation, users, contacts, volunteers, donations } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
+
   createContact(contact: InsertContact): Promise<Contact>;
   getContacts(): Promise<Contact[]>;
-  
+
   createVolunteer(volunteer: InsertVolunteer): Promise<Volunteer>;
   getVolunteers(): Promise<Volunteer[]>;
-  
+
   createDonation(donation: InsertDonation): Promise<Donation>;
   getDonations(): Promise<Donation[]>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private contacts: Map<string, Contact>;
-  private volunteers: Map<string, Volunteer>;
-  private donations: Map<string, Donation>;
-
-  constructor() {
-    this.users = new Map();
-    this.contacts = new Map();
-    this.volunteers = new Map();
-    this.donations = new Map();
-  }
-
+export class DatabaseStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await db.select().from(users).where(eq(users.id, id));
+    return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const result = await db.select().from(users).where(eq(users.username, username));
+    return result[0];
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
   }
 
   async createContact(insertContact: InsertContact): Promise<Contact> {
-    const id = randomUUID();
-    const contact: Contact = { 
-      ...insertContact, 
-      id, 
-      createdAt: new Date() 
-    };
-    this.contacts.set(id, contact);
-    return contact;
+    const result = await db.insert(contacts).values(insertContact).returning();
+    return result[0];
   }
 
   async getContacts(): Promise<Contact[]> {
-    return Array.from(this.contacts.values());
+    return await db.select().from(contacts).orderBy(contacts.createdAt);
   }
 
   async createVolunteer(insertVolunteer: InsertVolunteer): Promise<Volunteer> {
-    const id = randomUUID();
-    const volunteer: Volunteer = { 
-      ...insertVolunteer, 
-      id, 
-      createdAt: new Date() 
-    };
-    this.volunteers.set(id, volunteer);
-    return volunteer;
+    const result = await db.insert(volunteers).values(insertVolunteer).returning();
+    return result[0];
   }
 
   async getVolunteers(): Promise<Volunteer[]> {
-    return Array.from(this.volunteers.values());
+    return await db.select().from(volunteers).orderBy(volunteers.createdAt);
   }
 
   async createDonation(insertDonation: InsertDonation): Promise<Donation> {
-    const id = randomUUID();
-    const donation: Donation = { 
-      ...insertDonation, 
-      id, 
-      createdAt: new Date() 
-    };
-    this.donations.set(id, donation);
-    return donation;
+    const result = await db.insert(donations).values(insertDonation).returning();
+    return result[0];
   }
 
   async getDonations(): Promise<Donation[]> {
-    return Array.from(this.donations.values());
+    return await db.select().from(donations).orderBy(donations.createdAt);
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();

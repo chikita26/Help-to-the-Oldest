@@ -134,7 +134,7 @@ export default function Footer() {
         <div className="border-t border-gray-700 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2024 HELP To OLDEST. Tous droits réservés.
+              © 2024 Copright by HELP To OLDEST. All rights reserved !
             </div>
             <div className="flex space-x-4">
               <a 
@@ -154,7 +154,7 @@ export default function Footer() {
                 <Twitter size={20} />
               </a>
               <a 
-                href="https://www.instagram.com/associationhumanitairehold" 
+                href="https://www.linkedin.com/company/association-humanitaire-help-to-oldest-hold" 
                 className="text-gray-400 hover:text-secondary transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"

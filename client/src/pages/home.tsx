@@ -4,7 +4,7 @@ import AboutSection from "@/components/about-section";
 import ServicesSection from "@/components/services-section";
 import AmbitionsSection from "@/components/ambitions-section";
 import NewsSection from "@/components/news-section";
-import TestimonialsSection from "@/components/testimonials-section";  
+import TestimonialsSection from "@/components/testimonials-section";
 import GallerySection from "@/components/gallery-section";
 import VolunteerCtaSection from "@/components/volunteer-cta-section";
 import DonationSection from "@/components/donation-section";

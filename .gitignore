@@ -145,4 +145,10 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+<<<<<<< HEAD
 >>>>>>> efa83fc (Create website foundation for humanitarian organization HELP To OLDEST)
+=======
+.env
+server/.env
+client/.env
+>>>>>>> 9309aeb (test commit)

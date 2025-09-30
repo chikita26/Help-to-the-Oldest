@@ -22,8 +22,7 @@ export default function AboutSection() {
             </div>
             <div>
               <img 
-                src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
-                alt="Volontaires travaillant avec des personnes âgées" 
+                src="https://i.postimg.cc/PJ3DVJKm/Photo14.jpg"lt="Volontaires travaillant avec des personnes âgées" 
                 className="rounded-xl shadow-lg w-full h-auto"
               />
             </div>

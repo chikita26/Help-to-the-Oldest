@@ -4,37 +4,43 @@ export default function NewsSection() {
       date: "13 Juillet 2025",
       title: "Campagne de santé gratuite pour les personnes âgées",
       description: "Campagne de santé communautaire gratuite organisée à l'esplanade de la paroisse bienheureuse Anuaritte d'Obeck. Plus de 70 bénéficiaires.",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400"
+      image: "https://i.postimg.cc/WbYmXWfQ/Photo6.jpg"
     },
     {
       date: "14 Juin 2025",
       title: "Visite à domicile à Mbalmayo",
       description: "Série de visites à domicile pour toucher du doigt les réalités auxquelles font face nos aînés.",
-      image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400"
+      image: "https://i.postimg.cc/D0yscLQv/Photo13.jpg"
+    },
+    {
+      date: "20 Avril 2024",
+      title: "Distributions de dons aux personnes sans abris de Yaoundé",
+      description: "Nous avons partagés des denrées alimentaires et des produits de première necessité aux personnes vivant dans la rue principalement aux les alentours du quartier Mvogt. Des moments riches en émotion qui leur ont redonné le sourire.",
+      image: "https://i.postimg.cc/DZh18t8b/Photo11.jpg"
     },
     {
       date: "2024",
       title: "Journée Internationale de la Personne Âgée",
       description: "Célébration de la 34e édition des JIPA 2024 avec engagement renouvelé pour le bien-être des personnes âgées.",
-      image: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400"
+      image: "https://i.postimg.cc/pL5NTk0D/Affiche-de-remise-de-dipl-mes-ext-rieure-traditionnelle-en-bleu-blanc-et-or-7.png"
     },
     {
       date: "27 Octobre 2024",
       title: "Remise de dons à domicile",
       description: "Distribution de dons aux personnes âgées de Mbalmayo. Des moments riches en émotion qui leur ont redonné le sourire.",
-      image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400"
+      image: "https://i.postimg.cc/wxJMZc5b/Capture-d-cran-2025-08-06-190526.png"
     },
     {
       date: "16 Novembre 2024",
       title: "Assemblée Générale Trimestrielle",
       description: "Rencontre d'évaluation des actions et planification des futurs projets humanitaires.",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400"
+      image: "https://i.postimg.cc/fbFfbjr0/Image1.png"
     },
     {
       date: "Décembre 2024",
       title: "Noël avec les Seniors",
-      description: "Partage et amour au cœur des actions de l'Association humanitaire HOLD pendant les fêtes.",
-      image: "https://images.unsplash.com/photo-1576354302919-96748cb8299e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400"
+      description: "Partage et amour au cœur des actions de l'Association humanitaire HOLD pendant les fêtes au sein du service de geriatrie de l'hôpital central de Yaoundé.",
+      image: "https://i.postimg.cc/kGnNhkCd/Photo1.png"
     }
   ];
 
@@ -53,7 +59,7 @@ export default function NewsSection() {
               <img 
                 src={item.image} 
                 alt={item.title} 
-                className="w-full h-48 object-cover rounded-t-xl"
+                className="w-full aspect-[4/3] object-cover rounded-t-xl"
               />
               <div className="p-6">
                 <div className="text-sm text-secondary font-medium mb-2">{item.date}</div>

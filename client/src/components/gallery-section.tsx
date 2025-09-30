@@ -2,74 +2,74 @@ export default function GallerySection() {
   const galleryImages = [
     // Elderly care activities (6 images)
     {
-      src: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/DZh18t8b/Photo11.jpg",
       alt: "Activité cuisine avec les seniors"
     },
     {
-      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/D0yscLQv/Photo13.jpg",
       alt: "Cours d'exercice pour personnes âgées"
     },
     {
-      src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/kGnNhkCd/Photo1.png",
       alt: "Consultation médicale pour seniors"
     },
     {
-      src: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/yY8Xh4nm/Photo7.jpg",
       alt: "Activités de lecture et apprentissage"
     },
     {
-      src: "https://images.unsplash.com/photo-1576354302919-96748cb8299e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/PJ3DVJKm/Photo14.jpg",
       alt: "Activités sociales avec les seniors"
     },
     {
-      src: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/GhmMTkYp/IMG-9197.jpg",
       alt: "Soins et compagnie pour personnes âgées"
     },
     // Humanitarian volunteers (4 images)
     {
-      src: "https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/PxMYZ2wV/Photo12.jpg",
       alt: "Volontaires distribuant de la nourriture"
     },
     {
-      src: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/pL5NTk0D/Affiche-de-remise-de-dipl-mes-ext-rieure-traditionnelle-en-bleu-blanc-et-or-7.png",
       alt: "Équipe de travailleurs humanitaires"
     },
     {
-      src: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/fbFfbjr0/Image1.png",
       alt: "Volontaires aidant des personnes âgées"
     },
     {
-      src: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/cHLGsWPJ/IMG-20250714-WA1148.jpg",
       alt: "Volontaires de sensibilisation communautaire"
     },
     // Community health services (4 images)
     {
-      src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/rw1Bxzkm/IMG-20250714-WA1144.jpg",
       alt: "Dépistage de santé communautaire"
     },
     {
-      src: "https://images.unsplash.com/photo-1584362917165-526a968579e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/ydbtsZFf/IMG-20250714-WA1154.jpg",
       alt: "Clinique mobile de santé"
     },
     {
-      src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/3NnjMnr0/Photo3.jpg",
       alt: "Session d'éducation à la santé"
     },
     {
-      src: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/6Qnd695X/Photo10.jpg",
       alt: "Agents de santé communautaire"
     },
     // Intergenerational activities (3 images)
     {
-      src: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/gkH96nd0/Capture-d-cran-2025-08-06-184525.png",
       alt: "Grands-parents avec petits-enfants"
     },
     {
-      src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/bww5Dg36/Capture-d-cran-2025-08-06-185011.png",
       alt: "Rassemblement familial multigénérationnel"
     },
     {
-      src: "https://images.unsplash.com/photo-1609902726285-00668009f004?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400",
+      src: "https://i.postimg.cc/PfBfMLBz/Whats-App-Image-2025-05-06-16-32-24-3abf0d23.jpg",
       alt: "Jeunes apprenant des personnes âgées"
     }
   ];

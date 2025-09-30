@@ -4,39 +4,39 @@ export default function TestimonialsSection() {
   const testimonials = [
     {
       name: "Marie Nkoa",
-      location: "Mbalmayo",
-      content: "Grâce à HOLD, j'ai retrouvé l'espoir. Les soins médicaux gratuits m'ont permis de mieux gérer mon diabète. Je me sens moins seule grâce aux visites régulières des volontaires.",
-      image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+      location: "Bénéficiaire Mbalmayo",
+      content: "Grâce à HOLD, j'ai retrouvé l'espoir. Je me sens moins seule grâce aux visites régulières des volontaires.",
+      image: "https://i.postimg.cc/ctttw7nd/Photo3.jpg"
     },
     {
-      name: "Paul Mbida",
+      name: "Jodel TAPINGOUA",
       role: "Volontaire",
-      content: "Être volontaire chez HOLD a changé ma vision de la solidarité. Chaque sourire des personnes âgées que nous aidons me remplit de joie. C'est une expérience humaine extraordinaire.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+      content: "Être volontaire chez HOLD a changé ma vision de la solidarité. Chaque sourire des personnes âgées que nous aidons me remplit de joie. Prendre soin d'eux c'est nous rappeler qui nous sommes.",
+      image: "https://i.postimg.cc/5H9HnWC7/Photo10.jpg"
     },
     {
       name: "Jean Atangana",
       location: "Yaoundé",
       content: "L'aide alimentaire de HOLD m'a permis de traverser une période difficile. L'équipe est professionnelle et bienveillante. Ils redonnent vraiment le sourire aux personnes âgées.",
-      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+      image: "https://i.postimg.cc/GhmMTkYp/IMG-9197.jpg"
     },
     {
-      name: "Sylvie Fouda",
-      role: "Bénévole",
-      content: "Participer aux campagnes de santé HOLD m'a enrichie professionnellement et humainement. Voir l'impact direct de nos actions sur la vie des seniors est gratifiant.",
-      image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+      name: "Danelle KONGUE",
+      role: "Etudiante en médécine - Bénévole",
+      content: "Participer aux campagnes de santé HOLD m'a enrichie professionnellement et humainement. Prendre soin de nos aînés c'est prendre soin de notre propre avenir.",
+      image: "https://i.postimg.cc/WbYmXWfQ/Photo6.jpg"
     },
     {
       name: "Marguerite Onana",
-      location: "Mbalmayo",
-      content: "Les activités intergénérationnelles organisées par HOLD ont rapproché notre famille. Mes petits-enfants adorent participer aux événements. C'est formidable !",
-      image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+      location: "Bénéficiaire Hôpital central",
+      content: " Le ''Noël avec les séniors'' organisé par HOLD m'a redonné le sourrire ce 27/12/2024. Les autres patients et moi avions adoré participer à cet événement. C'était formidable !",
+      image: "https://i.postimg.cc/kGnNhkCd/Photo1.png"
     },
     {
-      name: "Dr. Emilie Mba",
+      name: "Dr. Yvan MVE",
       role: "Médecin Volontaire",
-      content: "Collaborer avec HOLD m'a permis d'apporter mes compétences médicales là où elles sont le plus nécessaires. L'organisation est sérieuse et l'impact réel.",
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+      content: "Faire partir de HOLD m'a permis d'apporter mes compétences médicales là où elles sont le plus nécessaires. L'indifférence fait viellir plus vite que le temps mais une main tendue ou un acte de soin rallume la flamme dans les coeurs fatigués.",
+      image: "https://i.postimg.cc/CxZGtG3d/Photo8.jpg"
     }
   ];
 
