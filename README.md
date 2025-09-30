@@ -5,11 +5,13 @@ A comprehensive website for the HELP To OLDEST humanitarian organization with co
 ## ✨ New Features Added
 
 ### 🗄️ Database Integration
+
 - **Replaced in-memory storage** with persistent PostgreSQL database using Drizzle ORM
 - **Data persistence** - No more data loss on server restart
 - **Better querying** and data management capabilities
 
 ### 📧 Email Notifications
+
 - **Instant email alerts** to administrators for:
   - New contact form submissions
   - Volunteer applications
@@ -17,11 +19,13 @@ A comprehensive website for the HELP To OLDEST humanitarian organization with co
 - **Configurable SMTP** settings (Gmail, SendGrid, etc.)
 
 ### 🔐 Admin Authentication System
+
 - **Secure login** with bcrypt password hashing
 - **Session-based authentication** with Express sessions
 - **Protected admin routes** with middleware
 
 ### 📊 Admin Dashboard
+
 - **Real-time statistics** showing total contacts, volunteers, and donations
 - **Complete data management** with tabbed interface for:
   - Contact messages with full details
@@ -35,6 +39,7 @@ A comprehensive website for the HELP To OLDEST humanitarian organization with co
 ### 1. Environment Configuration
 
 Copy the example environment file:
+
 ```bash
 cp .env.example .env
 ```
@@ -68,6 +73,7 @@ SESSION_SECRET=your_random_session_secret_here
 ### 2. Database Setup
 
 Push the database schema:
+
 ```bash
 npm run db:push
 ```
@@ -75,11 +81,13 @@ npm run db:push
 ### 3. Create Admin User
 
 Create your first admin user:
+
 ```bash
 npm run setup-admin <username> <password>
 ```
 
 Example:
+
 ```bash
 npm run setup-admin admin mySecurePassword123
 ```
@@ -99,12 +107,14 @@ npm run dev
 ## 🔧 Email Setup (Optional)
 
 ### Gmail Configuration
+
 1. Enable 2-factor authentication on your Gmail account
 2. Generate an "App Password" in your Google Account settings
 3. Use your Gmail address as `SMTP_USER`
 4. Use the app password as `SMTP_PASS`
 
 ### Other SMTP Providers
+
 - **SendGrid**: Use SendGrid SMTP credentials
 - **Mailgun**: Use Mailgun SMTP settings
 - **Custom SMTP**: Configure your own SMTP server
@@ -112,12 +122,14 @@ npm run dev
 ## 📋 Features Overview
 
 ### Public Features
+
 - **Contact Form**: Visitors can send messages with automatic email notifications
 - **Volunteer Registration**: People can apply to volunteer with detailed forms
 - **Donation System**: Integrated PayPal and Flutterwave payment processing
 - **Responsive Design**: Mobile-friendly interface
 
 ### Admin Features
+
 - **Dashboard Overview**: Quick stats and recent activity
 - **Contact Management**: View all contact form submissions
 - **Volunteer Management**: Review all volunteer applications
@@ -150,7 +162,7 @@ npm run dev
 
 ## 📞 Support
 
-For technical support or questions about the admin system, contact the development team.
+For technical support or questions about the admin system, contact I.
 
 ---
 

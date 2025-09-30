@@ -5,16 +5,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
+import { TextFormField } from "@/components/ui/form-field-wrapper";
+import { LoadingButton } from "@/components/ui/loading-spinner";
 import { useToast } from "@/hooks/use-toast";
+import { useErrorHandler } from "@/hooks/use-error-handler";
 import { apiRequest } from "@/lib/queryClient";
 
 const loginSchema = z.object({
@@ -27,6 +22,7 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { handleApiError } = useErrorHandler();
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -48,12 +44,8 @@ export default function AdminLogin() {
       });
       setLocation("/admin");
     },
-    onError: () => {
-      toast({
-        variant: "destructive",
-        title: "Erreur de connexion",
-        description: "Nom d'utilisateur ou mot de passe incorrect",
-      });
+    onError: (error) => {
+      handleApiError(error, "auth");
     },
   });
 
@@ -76,41 +68,31 @@ export default function AdminLogin() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
+              <TextFormField
                 control={form.control}
                 name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nom d'utilisateur</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Nom d'utilisateur"
+                placeholder="Votre nom d'utilisateur"
+                required
               />
 
-              <FormField
+              <TextFormField
                 control={form.control}
                 name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Mot de passe</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Mot de passe"
+                type="password"
+                placeholder="Votre mot de passe"
+                required
               />
 
-              <Button
+              <LoadingButton
                 type="submit"
                 className="w-full bg-primary hover:bg-blue-700 text-white"
-                disabled={loginMutation.isPending}
+                isLoading={loginMutation.isPending}
+                loadingText="Connexion..."
               >
-                {loginMutation.isPending ? "Connexion..." : "Se connecter"}
-              </Button>
+                Se connecter
+              </LoadingButton>
             </form>
           </Form>
         </div>

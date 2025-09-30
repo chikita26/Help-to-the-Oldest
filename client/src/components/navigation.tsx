@@ -97,44 +97,52 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-slate-200 py-4">
+          <div className="md:hidden bg-white border-t border-slate-200 py-4 shadow-lg">
             <div className="flex flex-col space-y-4">
               <button
                 onClick={() => scrollToSection("accueil")}
-                className="text-slate-600 hover:text-primary transition-colors text-left"
+                className="text-slate-600 hover:text-primary transition-colors text-left py-2 px-4 hover:bg-slate-50 rounded"
               >
                 Accueil
               </button>
               <button
                 onClick={() => scrollToSection("propos")}
-                className="text-slate-600 hover:text-primary transition-colors text-left"
+                className="text-slate-600 hover:text-primary transition-colors text-left py-2 px-4 hover:bg-slate-50 rounded"
               >
                 À Propos
               </button>
               <button
                 onClick={() => scrollToSection("services")}
-                className="text-slate-600 hover:text-primary transition-colors text-left"
+                className="text-slate-600 hover:text-primary transition-colors text-left py-2 px-4 hover:bg-slate-50 rounded"
               >
                 Nos Actions
               </button>
               <button
                 onClick={() => scrollToSection("actualites")}
-                className="text-slate-600 hover:text-primary transition-colors text-left"
+                className="text-slate-600 hover:text-primary transition-colors text-left py-2 px-4 hover:bg-slate-50 rounded"
               >
                 Actualités
               </button>
               <button
                 onClick={() => scrollToSection("temoignages")}
-                className="text-slate-600 hover:text-primary transition-colors text-left"
+                className="text-slate-600 hover:text-primary transition-colors text-left py-2 px-4 hover:bg-slate-50 rounded"
               >
                 Témoignages
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="text-slate-600 hover:text-primary transition-colors text-left"
+                className="text-slate-600 hover:text-primary transition-colors text-left py-2 px-4 hover:bg-slate-50 rounded"
               >
                 Contact
               </button>
+              <div className="pt-4 border-t border-slate-200 mt-4">
+                <Button
+                  onClick={() => scrollToSection("don")}
+                  className="w-full bg-secondary text-white hover:bg-orange-600 transition-colors font-medium py-3"
+                >
+                  Faire un Don
+                </Button>
+              </div>
             </div>
           </div>
         )}

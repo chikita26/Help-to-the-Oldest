@@ -2,11 +2,21 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { PAYMENT_CONFIG, generateUSSDCode, formatPhoneForDisplay } from "@shared/payment-config";
+import {
+  PAYMENT_CONFIG,
+  generateUSSDCode,
+  formatPhoneForDisplay,
+} from "@shared/payment-config";
 import { Copy, Phone, CreditCard } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -35,7 +45,8 @@ export default function Payment() {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4">Faire un Don</h1>
             <p className="text-lg text-gray-600">
-              Choisissez votre méthode de paiement préférée pour soutenir notre cause
+              Choisissez votre méthode de paiement préférée pour soutenir notre
+              cause
             </p>
           </div>
 
@@ -74,14 +85,15 @@ export default function Payment() {
                   Paiement PayPal
                 </CardTitle>
                 <CardDescription>
-                  Paiement sécurisé avec PayPal - Accepte les cartes de crédit internationales
+                  Paiement sécurisé avec PayPal - Accepte les cartes de crédit
+                  internationales
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <PayPalScriptProvider
                   options={{
                     clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || "test",
-                    currency: "USD"
+                    currency: "USD",
                   }}
                 >
                   <PayPalButtons
@@ -93,7 +105,7 @@ export default function Payment() {
                             "Content-Type": "application/json",
                           },
                           body: JSON.stringify({
-                            amount: amount || "10.00"
+                            amount: amount || "10.00",
                           }),
                         });
 
@@ -112,7 +124,8 @@ export default function Payment() {
                         toast({
                           variant: "destructive",
                           title: "Erreur PayPal",
-                          description: "Impossible de créer la commande PayPal. Veuillez réessayer.",
+                          description:
+                            "Impossible de créer la commande PayPal. Veuillez réessayer.",
                         });
                         throw error;
                       }
@@ -143,7 +156,8 @@ export default function Payment() {
                         toast({
                           variant: "destructive",
                           title: "Erreur de paiement",
-                          description: "Le paiement n'a pas pu être traité. Veuillez réessayer.",
+                          description:
+                            "Le paiement n'a pas pu être traité. Veuillez réessayer.",
                         });
                       }
                     }}
@@ -166,10 +180,12 @@ export default function Payment() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Phone className="mr-2" />
-                  Paiement {PAYMENT_CONFIG[selectedMethod as 'mtn' | 'orange'].name}
+                  Paiement{" "}
+                  {PAYMENT_CONFIG[selectedMethod as "mtn" | "orange"].name}
                 </CardTitle>
                 <CardDescription>
-                  Payez facilement avec votre mobile money en composant le code USSD
+                  Payez facilement avec votre mobile money en composant le code
+                  USSD
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -200,7 +216,10 @@ export default function Payment() {
                           Numéro de l'organisation
                         </Label>
                         <div className="text-xl font-mono">
-                          {formatPhoneForDisplay(PAYMENT_CONFIG[selectedMethod as 'mtn' | 'orange'].phone)}
+                          {formatPhoneForDisplay(
+                            PAYMENT_CONFIG[selectedMethod as "mtn" | "orange"]
+                              .phone
+                          )}
                         </div>
                       </div>
 
@@ -210,10 +229,20 @@ export default function Payment() {
                         </Label>
                         <div className="flex items-center gap-2 mt-2">
                           <code className="bg-white px-4 py-3 rounded-lg text-lg font-mono border flex-1">
-                            {generateUSSDCode(selectedMethod as 'mtn' | 'orange', amount)}
+                            {generateUSSDCode(
+                              selectedMethod as "mtn" | "orange",
+                              amount
+                            )}
                           </code>
                           <Button
-                            onClick={() => copyToClipboard(generateUSSDCode(selectedMethod as 'mtn' | 'orange', amount))}
+                            onClick={() =>
+                              copyToClipboard(
+                                generateUSSDCode(
+                                  selectedMethod as "mtn" | "orange",
+                                  amount
+                                )
+                              )
+                            }
                             variant="outline"
                             size="sm"
                           >
@@ -224,14 +253,32 @@ export default function Payment() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <Button
-                          onClick={() => dialUSSD(generateUSSDCode(selectedMethod as 'mtn' | 'orange', amount))}
-                          className={selectedMethod === 'mtn' ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-orange-500 hover:bg-orange-600'}
+                          onClick={() =>
+                            dialUSSD(
+                              generateUSSDCode(
+                                selectedMethod as "mtn" | "orange",
+                                amount
+                              )
+                            )
+                          }
+                          className={
+                            selectedMethod === "mtn"
+                              ? "bg-yellow-500 hover:bg-yellow-600"
+                              : "bg-orange-500 hover:bg-orange-600"
+                          }
                         >
                           <Phone className="mr-2" size={16} />
                           Composer automatiquement
                         </Button>
                         <Button
-                          onClick={() => copyToClipboard(generateUSSDCode(selectedMethod as 'mtn' | 'orange', amount))}
+                          onClick={() =>
+                            copyToClipboard(
+                              generateUSSDCode(
+                                selectedMethod as "mtn" | "orange",
+                                amount
+                              )
+                            )
+                          }
                           variant="outline"
                         >
                           <Copy className="mr-2" size={16} />
@@ -240,10 +287,16 @@ export default function Payment() {
                       </div>
 
                       <div className="bg-blue-50 p-4 rounded-lg">
-                        <h4 className="font-medium text-blue-900 mb-2">Étapes à suivre :</h4>
+                        <h4 className="font-medium text-blue-900 mb-2">
+                          Étapes à suivre :
+                        </h4>
                         <ol className="list-decimal list-inside space-y-1 text-blue-800">
-                          {PAYMENT_CONFIG[selectedMethod as 'mtn' | 'orange'].instructions.map((instruction, index) => (
-                            <li key={index} className="text-sm">{instruction}</li>
+                          {PAYMENT_CONFIG[
+                            selectedMethod as "mtn" | "orange"
+                          ].instructions.map((instruction, index) => (
+                            <li key={index} className="text-sm">
+                              {instruction}
+                            </li>
                           ))}
                         </ol>
                       </div>

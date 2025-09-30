@@ -1,13 +1,30 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { Users, MessageSquare, Heart, DollarSign, LogOut } from "lucide-react";
+import {
+  Users,
+  MessageSquare,
+  Heart,
+  LogOut,
+  Mail,
+  Phone,
+  Calendar,
+  TrendingUp,
+  Inbox,
+  UserCheck,
+  Gift
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { SearchBar } from "@/components/ui/search-bar";
+import { EmptyState } from "@/components/ui/empty-state";
+import { DonationTypeBadge, AvailabilityBadge, SubjectBadge } from "@/components/ui/status-badge";
 import { useToast } from "@/hooks/use-toast";
 import { useAuthGuard } from "@/hooks/use-auth-guard";
 import { apiRequest } from "@/lib/queryClient";
 import type { Contact, Volunteer, Donation } from "@shared/schema";
+import { useState, useMemo } from "react";
 
 interface AdminStats {
   totalContacts: number;
@@ -21,6 +38,11 @@ interface AdminStats {
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+
+  // Search states
+  const [contactSearch, setContactSearch] = useState("");
+  const [volunteerSearch, setVolunteerSearch] = useState("");
+  const [donationSearch, setDonationSearch] = useState("");
 
   // Use authentication guard with admin requirement
   const { user, isLoading: authLoading, isAuthenticated } = useAuthGuard({
@@ -82,6 +104,45 @@ export default function AdminDashboard() {
     logoutMutation.mutate();
   };
 
+  // Filtered data based on search
+  const filteredContacts = useMemo(() => {
+    if (!contacts) return [];
+    const query = contactSearch.toLowerCase();
+    return contacts.filter(
+      (c) =>
+        c.firstName.toLowerCase().includes(query) ||
+        c.lastName.toLowerCase().includes(query) ||
+        c.email.toLowerCase().includes(query) ||
+        c.subject.toLowerCase().includes(query) ||
+        c.message.toLowerCase().includes(query)
+    );
+  }, [contacts, contactSearch]);
+
+  const filteredVolunteers = useMemo(() => {
+    if (!volunteers) return [];
+    const query = volunteerSearch.toLowerCase();
+    return volunteers.filter(
+      (v) =>
+        v.firstName.toLowerCase().includes(query) ||
+        v.lastName.toLowerCase().includes(query) ||
+        v.email.toLowerCase().includes(query) ||
+        v.phone.toLowerCase().includes(query) ||
+        (v.profession && v.profession.toLowerCase().includes(query))
+    );
+  }, [volunteers, volunteerSearch]);
+
+  const filteredDonations = useMemo(() => {
+    if (!donations) return [];
+    const query = donationSearch.toLowerCase();
+    return donations.filter(
+      (d) =>
+        d.donorName.toLowerCase().includes(query) ||
+        d.email.toLowerCase().includes(query) ||
+        (d.amount && d.amount.toLowerCase().includes(query)) ||
+        d.type.toLowerCase().includes(query)
+    );
+  }, [donations, donationSearch]);
+
   // Show loading while checking authentication or loading stats
   if (authLoading || (isAuthenticated && statsLoading)) {
     return (
@@ -120,44 +181,71 @@ export default function AdminDashboard() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
+        {/* Enhanced Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          <Card className="border-l-4 border-l-blue-500 hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Messages</CardTitle>
-              <MessageSquare className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-gray-700">
+                Messages de Contact
+              </CardTitle>
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <MessageSquare className="h-5 w-5 text-blue-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats?.totalContacts || 0}</div>
-              <p className="text-xs text-muted-foreground">
-                +{stats?.recentContacts.length || 0} récents
-              </p>
+              <div className="text-3xl font-bold text-blue-900">
+                {stats?.totalContacts || 0}
+              </div>
+              <div className="flex items-center gap-1 mt-2">
+                <TrendingUp className="h-3 w-3 text-green-600" />
+                <p className="text-xs text-green-600 font-medium">
+                  +{stats?.recentContacts.length || 0} ce mois
+                </p>
+              </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-l-4 border-l-orange-500 hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Volontaires</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-gray-700">
+                Candidatures Volontaires
+              </CardTitle>
+              <div className="p-2 bg-orange-100 rounded-lg">
+                <Users className="h-5 w-5 text-orange-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats?.totalVolunteers || 0}</div>
-              <p className="text-xs text-muted-foreground">
-                +{stats?.recentVolunteers.length || 0} récents
-              </p>
+              <div className="text-3xl font-bold text-orange-900">
+                {stats?.totalVolunteers || 0}
+              </div>
+              <div className="flex items-center gap-1 mt-2">
+                <TrendingUp className="h-3 w-3 text-green-600" />
+                <p className="text-xs text-green-600 font-medium">
+                  +{stats?.recentVolunteers.length || 0} ce mois
+                </p>
+              </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-l-4 border-l-green-500 hover:shadow-lg transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Dons</CardTitle>
-              <Heart className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-gray-700">
+                Dons Reçus
+              </CardTitle>
+              <div className="p-2 bg-green-100 rounded-lg">
+                <Heart className="h-5 w-5 text-green-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats?.totalDonations || 0}</div>
-              <p className="text-xs text-muted-foreground">
-                +{stats?.recentDonations.length || 0} récents
-              </p>
+              <div className="text-3xl font-bold text-green-900">
+                {stats?.totalDonations || 0}
+              </div>
+              <div className="flex items-center gap-1 mt-2">
+                <TrendingUp className="h-3 w-3 text-green-600" />
+                <p className="text-xs text-green-600 font-medium">
+                  +{stats?.recentDonations.length || 0} ce mois
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -173,37 +261,76 @@ export default function AdminDashboard() {
           <TabsContent value="contacts">
             <Card>
               <CardHeader>
-                <CardTitle>Messages de contact</CardTitle>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <CardTitle>Messages de contact</CardTitle>
+                  <div className="w-full sm:w-80">
+                    <SearchBar
+                      placeholder="Rechercher par nom, email, sujet..."
+                      onSearch={setContactSearch}
+                    />
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {contacts?.map((contact) => (
-                    <div
-                      key={contact.id}
-                      className="border rounded-lg p-4 bg-white"
-                    >
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-semibold">
-                          {contact.firstName} {contact.lastName}
-                        </h4>
-                        <span className="text-sm text-muted-foreground">
-                          {new Date(contact.createdAt!).toLocaleDateString()}
-                        </span>
+                {filteredContacts.length > 0 ? (
+                  <div className="space-y-4">
+                    {filteredContacts.map((contact) => (
+                      <div
+                        key={contact.id}
+                        className="border rounded-lg p-4 bg-white hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-lg text-gray-900">
+                              {contact.firstName} {contact.lastName}
+                            </h4>
+                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                              <SubjectBadge subject={contact.subject} />
+                              <span className="text-xs text-gray-500">
+                                <Calendar className="inline h-3 w-3 mr-1" />
+                                {new Date(contact.createdAt!).toLocaleDateString("fr-FR", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric"
+                                })}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => window.location.href = `mailto:${contact.email}`}
+                              className="flex items-center gap-1"
+                            >
+                              <Mail className="h-4 w-4" />
+                              <span className="hidden sm:inline">Email</span>
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <p className="text-gray-600">
+                            <Mail className="inline h-4 w-4 mr-2 text-gray-400" />
+                            {contact.email}
+                          </p>
+                          <div className="bg-gray-50 rounded-lg p-3 mt-3">
+                            <p className="text-gray-700 whitespace-pre-wrap">{contact.message}</p>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        Email: {contact.email}
-                      </p>
-                      <p className="text-sm font-medium mb-2">
-                        Sujet: {contact.subject}
-                      </p>
-                      <p className="text-sm">{contact.message}</p>
-                    </div>
-                  )) || (
-                    <p className="text-center text-muted-foreground py-8">
-                      Aucun message de contact
-                    </p>
-                  )}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <EmptyState
+                    icon={Inbox}
+                    title={contactSearch ? "Aucun résultat trouvé" : "Aucun message de contact"}
+                    description={
+                      contactSearch
+                        ? "Essayez avec d'autres termes de recherche"
+                        : "Les messages de contact apparaîtront ici"
+                    }
+                  />
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -211,52 +338,98 @@ export default function AdminDashboard() {
           <TabsContent value="volunteers">
             <Card>
               <CardHeader>
-                <CardTitle>Candidatures de volontaires</CardTitle>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <CardTitle>Candidatures de volontaires</CardTitle>
+                  <div className="w-full sm:w-80">
+                    <SearchBar
+                      placeholder="Rechercher par nom, email, téléphone..."
+                      onSearch={setVolunteerSearch}
+                    />
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {volunteers?.map((volunteer) => (
-                    <div
-                      key={volunteer.id}
-                      className="border rounded-lg p-4 bg-white"
-                    >
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-semibold">
-                          {volunteer.firstName} {volunteer.lastName}
-                        </h4>
-                        <span className="text-sm text-muted-foreground">
-                          {new Date(volunteer.createdAt!).toLocaleDateString()}
-                        </span>
+                {filteredVolunteers.length > 0 ? (
+                  <div className="space-y-4">
+                    {filteredVolunteers.map((volunteer) => (
+                      <div
+                        key={volunteer.id}
+                        className="border rounded-lg p-4 bg-white hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-lg text-gray-900">
+                              {volunteer.firstName} {volunteer.lastName}
+                            </h4>
+                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                              <AvailabilityBadge availability={volunteer.availability} />
+                              <span className="text-xs text-gray-500">
+                                <Calendar className="inline h-3 w-3 mr-1" />
+                                {new Date(volunteer.createdAt!).toLocaleDateString("fr-FR", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric"
+                                })}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => window.location.href = `mailto:${volunteer.email}`}
+                              className="flex items-center gap-1"
+                            >
+                              <Mail className="h-4 w-4" />
+                              <span className="hidden sm:inline">Email</span>
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => window.location.href = `tel:${volunteer.phone}`}
+                              className="flex items-center gap-1"
+                            >
+                              <Phone className="h-4 w-4" />
+                              <span className="hidden sm:inline">Appeler</span>
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-3">
+                          <div className="flex items-center gap-2">
+                            <Mail className="h-4 w-4 text-gray-400" />
+                            <span className="text-gray-600 truncate">{volunteer.email}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Phone className="h-4 w-4 text-gray-400" />
+                            <span className="text-gray-600">{volunteer.phone}</span>
+                          </div>
+                          {volunteer.profession && (
+                            <div className="flex items-center gap-2">
+                              <UserCheck className="h-4 w-4 text-gray-400" />
+                              <span className="text-gray-600">{volunteer.profession}</span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="bg-gray-50 rounded-lg p-3 mt-3">
+                          <p className="text-xs text-gray-500 font-medium mb-1">Motivation</p>
+                          <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                            {volunteer.motivation}
+                          </p>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <p className="text-muted-foreground">Email:</p>
-                          <p>{volunteer.email}</p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Téléphone:</p>
-                          <p>{volunteer.phone}</p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Profession:</p>
-                          <p>{volunteer.profession || "Non spécifiée"}</p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Disponibilité:</p>
-                          <p>{volunteer.availability}</p>
-                        </div>
-                      </div>
-                      <div className="mt-4">
-                        <p className="text-muted-foreground text-sm">Motivation:</p>
-                        <p className="text-sm">{volunteer.motivation}</p>
-                      </div>
-                    </div>
-                  )) || (
-                    <p className="text-center text-muted-foreground py-8">
-                      Aucune candidature de volontaire
-                    </p>
-                  )}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <EmptyState
+                    icon={UserCheck}
+                    title={volunteerSearch ? "Aucun résultat trouvé" : "Aucune candidature de volontaire"}
+                    description={
+                      volunteerSearch
+                        ? "Essayez avec d'autres termes de recherche"
+                        : "Les candidatures de volontaires apparaîtront ici"
+                    }
+                  />
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -264,48 +437,96 @@ export default function AdminDashboard() {
           <TabsContent value="donations">
             <Card>
               <CardHeader>
-                <CardTitle>Dons reçus</CardTitle>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <CardTitle>Dons reçus</CardTitle>
+                  <div className="w-full sm:w-80">
+                    <SearchBar
+                      placeholder="Rechercher par nom, montant, type..."
+                      onSearch={setDonationSearch}
+                    />
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {donations?.map((donation) => (
-                    <div
-                      key={donation.id}
-                      className="border rounded-lg p-4 bg-white"
-                    >
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-semibold">{donation.donorName}</h4>
-                        <span className="text-sm text-muted-foreground">
-                          {new Date(donation.createdAt!).toLocaleDateString()}
-                        </span>
+                {filteredDonations.length > 0 ? (
+                  <div className="space-y-4">
+                    {filteredDonations.map((donation) => (
+                      <div
+                        key={donation.id}
+                        className="border rounded-lg p-4 bg-white hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-lg text-gray-900">
+                              {donation.donorName}
+                            </h4>
+                            <div className="flex flex-wrap items-center gap-2 mt-2">
+                              <DonationTypeBadge type={donation.type} />
+                              <span className="text-xs text-gray-500">
+                                <Calendar className="inline h-3 w-3 mr-1" />
+                                {new Date(donation.createdAt!).toLocaleDateString("fr-FR", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric"
+                                })}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => window.location.href = `mailto:${donation.email}`}
+                              className="flex items-center gap-1"
+                            >
+                              <Mail className="h-4 w-4" />
+                              <span className="hidden sm:inline">Email</span>
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-3">
+                          <div className="flex items-center gap-2">
+                            <Mail className="h-4 w-4 text-gray-400" />
+                            <span className="text-gray-600 truncate">{donation.email}</span>
+                          </div>
+                          {donation.amount && (
+                            <div className="flex items-center gap-2">
+                              <Gift className="h-4 w-4 text-gray-400" />
+                              <span className={`font-semibold ${
+                                donation.type === "monetary"
+                                  ? "text-emerald-700"
+                                  : "text-amber-700"
+                              }`}>
+                                {donation.type === "monetary"
+                                  ? `${donation.amount} FCFA`
+                                  : donation.amount
+                                }
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        {donation.message && (
+                          <div className="bg-gray-50 rounded-lg p-3 mt-3">
+                            <p className="text-xs text-gray-500 font-medium mb-1">Message du donateur</p>
+                            <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                              {donation.message}
+                            </p>
+                          </div>
+                        )}
                       </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <p className="text-muted-foreground">Email:</p>
-                          <p>{donation.email}</p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Montant:</p>
-                          <p className="font-semibold">{donation.amount}</p>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground">Type:</p>
-                          <p>{donation.type}</p>
-                        </div>
-                      </div>
-                      {donation.message && (
-                        <div className="mt-4">
-                          <p className="text-muted-foreground text-sm">Message:</p>
-                          <p className="text-sm">{donation.message}</p>
-                        </div>
-                      )}
-                    </div>
-                  )) || (
-                    <p className="text-center text-muted-foreground py-8">
-                      Aucun don reçu
-                    </p>
-                  )}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <EmptyState
+                    icon={Gift}
+                    title={donationSearch ? "Aucun résultat trouvé" : "Aucun don reçu"}
+                    description={
+                      donationSearch
+                        ? "Essayez avec d'autres termes de recherche"
+                        : "Les dons reçus apparaîtront ici"
+                    }
+                  />
+                )}
               </CardContent>
             </Card>
           </TabsContent>
