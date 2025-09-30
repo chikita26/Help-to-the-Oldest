@@ -23,13 +23,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Configure PayPal
   const clientId = process.env.PAYPAL_CLIENT_ID;
   const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
+  const environment = Environment.Sandbox;
 
   if (!clientId || !clientSecret) {
-    console.log(clientId, clientSecret);
+    console.error("PayPal configuration error:");
+    console.error("Client ID:", clientId ? "✓ Present" : "✗ Missing");
+    console.error("Client Secret:", clientSecret ? "✓ Present" : "✗ Missing");
     throw new Error("PayPal client ID and secret are required");
   }
 
-  const environment = Environment.Sandbox;
+  console.log("PayPal configured successfully for", environment);
   const client = new Client({
     clientCredentialsAuthCredentials: {
       oAuthClientId: clientId,
@@ -200,6 +203,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // PayPal create order
   app.post("/api/paypal/create-order", async (req, res) => {
     try {
+      console.log("Creating PayPal order with request:", req.body);
+
+      const { amount } = req.body;
+      const orderAmount = amount || "10.00";
+
       const order = await ordersController.createOrder({
         body: {
           intent: "CAPTURE" as any,
@@ -207,16 +215,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
             {
               amount: {
                 currencyCode: "USD",
-                value: "10.00", // You can get this value from the request body
+                value: orderAmount,
               },
             },
           ],
         },
       });
+
       const orderResponse = order.result;
+      console.log("PayPal order created successfully:", orderResponse.id);
+
       res.json({ id: orderResponse.id });
     } catch (err: any) {
-      res.status(500).send(err.message || "PayPal order creation failed");
+      console.error("PayPal order creation error:", err);
+      res.status(500).json({
+        error: "PayPal order creation failed",
+        message: err.message
+      });
     }
   });
 
@@ -225,14 +240,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const { orderID } = req.body;
 
     try {
+      console.log("Capturing PayPal order:", orderID);
+
       const capture = await ordersController.captureOrder({
         id: orderID,
         body: {},
       });
+
+      console.log("PayPal order captured successfully:", capture.result);
+
       // Save the capture information to your database here
       res.json(capture.result);
     } catch (err: any) {
-      res.status(500).send(err.message || "PayPal order capture failed");
+      console.error("PayPal order capture error:", err);
+      res.status(500).json({
+        error: "PayPal order capture failed",
+        message: err.message
+      });
     }
   });
 

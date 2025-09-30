@@ -79,33 +79,81 @@ export default function Payment() {
               </CardHeader>
               <CardContent>
                 <PayPalScriptProvider
-                  options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID }}
+                  options={{
+                    clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || "test",
+                    currency: "USD"
+                  }}
                 >
                   <PayPalButtons
                     createOrder={async () => {
-                      const res = await fetch("/api/paypal/create-order", {
-                        method: "POST",
-                      });
-                      const order = await res.json();
-                      return order.id;
+                      try {
+                        const res = await fetch("/api/paypal/create-order", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            amount: amount || "10.00"
+                          }),
+                        });
+
+                        if (!res.ok) {
+                          throw new Error(`HTTP error! status: ${res.status}`);
+                        }
+
+                        const order = await res.json();
+                        if (!order.id) {
+                          throw new Error("Order ID not received from server");
+                        }
+
+                        return order.id;
+                      } catch (error) {
+                        console.error("PayPal create order error:", error);
+                        toast({
+                          variant: "destructive",
+                          title: "Erreur PayPal",
+                          description: "Impossible de créer la commande PayPal. Veuillez réessayer.",
+                        });
+                        throw error;
+                      }
                     }}
                     onApprove={async (data) => {
-                      const res = await fetch("/api/paypal/capture-order", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          orderID: data.orderID,
-                        }),
-                      });
-                      await res.json();
-                      if (res.ok) {
+                      try {
+                        const res = await fetch("/api/paypal/capture-order", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            orderID: data.orderID,
+                          }),
+                        });
+
+                        if (!res.ok) {
+                          throw new Error(`HTTP error! status: ${res.status}`);
+                        }
+
+                        await res.json();
                         toast({
                           title: "Paiement réussi !",
                           description: "Merci pour votre don généreux.",
                         });
+                      } catch (error) {
+                        console.error("PayPal capture error:", error);
+                        toast({
+                          variant: "destructive",
+                          title: "Erreur de paiement",
+                          description: "Le paiement n'a pas pu être traité. Veuillez réessayer.",
+                        });
                       }
+                    }}
+                    onError={(err) => {
+                      console.error("PayPal error:", err);
+                      toast({
+                        variant: "destructive",
+                        title: "Erreur PayPal",
+                        description: "Une erreur s'est produite avec PayPal.",
+                      });
                     }}
                   />
                 </PayPalScriptProvider>
