@@ -1,11 +1,11 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { useEffect } from "react";
 import { Users, MessageSquare, Heart, DollarSign, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { useAuthGuard } from "@/hooks/use-auth-guard";
 import { apiRequest } from "@/lib/queryClient";
 import type { Contact, Volunteer, Donation } from "@shared/schema";
 
@@ -22,20 +22,20 @@ export default function AdminDashboard() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
-  const { data: stats, isLoading: statsLoading, error: statsError } = useQuery<AdminStats>({
+  // Use authentication guard with admin requirement
+  const { user, isLoading: authLoading, isAuthenticated } = useAuthGuard({
+    requireAdmin: true,
+    redirectTo: "/admin/login"
+  });
+
+  const { data: stats, isLoading: statsLoading } = useQuery<AdminStats>({
     queryKey: ["admin-stats"],
     queryFn: async () => {
       const response = await apiRequest("GET", "/api/admin/stats");
       return response.json();
     },
+    enabled: isAuthenticated, // Only fetch stats if authenticated
   });
-
-  // Redirect to login if user is not authenticated
-  useEffect(() => {
-    if (statsError && statsError.message.includes("401")) {
-      setLocation("/admin/login");
-    }
-  }, [statsError, setLocation]);
 
   const { data: contacts } = useQuery<Contact[]>({
     queryKey: ["admin-contacts"],
@@ -43,6 +43,7 @@ export default function AdminDashboard() {
       const response = await apiRequest("GET", "/api/admin/contacts");
       return response.json();
     },
+    enabled: isAuthenticated, // Only fetch if authenticated
   });
 
   const { data: volunteers } = useQuery<Volunteer[]>({
@@ -51,6 +52,7 @@ export default function AdminDashboard() {
       const response = await apiRequest("GET", "/api/admin/volunteers");
       return response.json();
     },
+    enabled: isAuthenticated, // Only fetch if authenticated
   });
 
   const { data: donations } = useQuery<Donation[]>({
@@ -59,6 +61,7 @@ export default function AdminDashboard() {
       const response = await apiRequest("GET", "/api/admin/donations");
       return response.json();
     },
+    enabled: isAuthenticated, // Only fetch if authenticated
   });
 
   const logoutMutation = useMutation({
@@ -79,15 +82,23 @@ export default function AdminDashboard() {
     logoutMutation.mutate();
   };
 
-  if (statsLoading) {
+  // Show loading while checking authentication or loading stats
+  if (authLoading || (isAuthenticated && statsLoading)) {
     return (
       <div className="min-h-screen bg-warm-gray flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-slate-600">Chargement du tableau de bord...</p>
+          <p className="text-slate-600">
+            {authLoading ? "Vérification de l'authentification..." : "Chargement du tableau de bord..."}
+          </p>
         </div>
       </div>
     );
+  }
+
+  // Don't render anything if not authenticated (redirect will happen)
+  if (!isAuthenticated) {
+    return null;
   }
 
   return (

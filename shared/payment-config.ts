@@ -1,7 +1,7 @@
 export const PAYMENT_CONFIG = {
   mtn: {
     name: "MTN Mobile Money",
-    phone: "681752051",
+    phone: "679395853",
     ussdCode: "*126*9*{phone}*{amount}#",
     color: "yellow",
     instructions: [
@@ -9,18 +9,20 @@ export const PAYMENT_CONFIG = {
       "Confirmez le montant",
       "Entrez votre code PIN MTN",
       "Confirmez la transaction",
+      "nom du bénéficiaire: MENGUE CLaudel Florentin",
     ],
   },
   orange: {
     name: "Orange Money",
-    phone: "681752051",
-    ussdCode: "*130*{phone}*{amount}#",
+    phone: "695842668",
+    ussdCode: "#150*11*{phone}#",
     color: "orange",
     instructions: [
       "Composez le code USSD généré",
       "Confirmez le montant",
       "Entrez votre code PIN Orange",
       "Confirmez la transaction",
+      "nom du bénéficiaire: MENGUE CLaudel Florentin",
     ],
   },
   paypal: {

@@ -1,10 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -25,8 +44,8 @@ export default function VolunteerCtaSection() {
       phone: "",
       profession: "",
       motivation: "",
-      availability: ""
-    }
+      availability: "",
+    },
   });
 
   const volunteerMutation = useMutation({
@@ -37,7 +56,8 @@ export default function VolunteerCtaSection() {
     onSuccess: () => {
       toast({
         title: "Inscription réussie !",
-        description: "Merci pour votre engagement. Nous vous contacterons bientôt."
+        description:
+          "Merci pour votre engagement. Nous vous contacterons bientôt.",
       });
       form.reset();
       setIsDialogOpen(false);
@@ -46,9 +66,10 @@ export default function VolunteerCtaSection() {
       toast({
         variant: "destructive",
         title: "Erreur",
-        description: "Une erreur s'est produite lors de l'inscription. Veuillez réessayer."
+        description:
+          "Une erreur s'est produite lors de l'inscription. Veuillez réessayer.",
       });
-    }
+    },
   });
 
   const onSubmit = (data: InsertVolunteer) => {
@@ -56,12 +77,19 @@ export default function VolunteerCtaSection() {
   };
 
   return (
-    <section id="volontaire" className="py-16 bg-gradient-to-r from-secondary to-orange-600 text-white">
+    <section
+      id="volontaire"
+      className="py-16 bg-gradient-to-r from-secondary to-orange-600 text-white"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Appel à Volontaire</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Appel à Volontaire
+          </h2>
           <p className="text-xl mb-8 leading-relaxed">
-            Nos certificats de volontariat/bénévolat sont légalement reconnus. Pour les étudiants, durant nos activités, des professionnels leur offrent un encadrement sérieux.
+            Nos certificats de volontariat/bénévolat sont légalement reconnus.
+            Pour les étudiants, durant nos activités, des professionnels leur
+            offrent un encadrement sérieux.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -75,7 +103,10 @@ export default function VolunteerCtaSection() {
                   <DialogTitle>Inscription Volontaire</DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                  >
                     <div className="grid md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -153,7 +184,10 @@ export default function VolunteerCtaSection() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Disponibilité</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Sélectionnez votre disponibilité" />
@@ -163,7 +197,9 @@ export default function VolunteerCtaSection() {
                               <SelectItem value="weekend">Week-ends</SelectItem>
                               <SelectItem value="evenings">Soirées</SelectItem>
                               <SelectItem value="flexible">Flexible</SelectItem>
-                              <SelectItem value="full-time">Temps plein</SelectItem>
+                              <SelectItem value="full-time">
+                                Temps plein
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -178,9 +214,9 @@ export default function VolunteerCtaSection() {
                         <FormItem>
                           <FormLabel>Motivation</FormLabel>
                           <FormControl>
-                            <Textarea 
+                            <Textarea
                               placeholder="Expliquez votre motivation à devenir volontaire..."
-                              {...field} 
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
@@ -188,20 +224,22 @@ export default function VolunteerCtaSection() {
                       )}
                     />
 
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       className="w-full bg-primary hover:bg-blue-700"
                       disabled={volunteerMutation.isPending}
                     >
-                      {volunteerMutation.isPending ? "Inscription en cours..." : "S'inscrire"}
+                      {volunteerMutation.isPending
+                        ? "Inscription en cours..."
+                        : "S'inscrire"}
                     </Button>
                   </form>
                 </Form>
               </DialogContent>
             </Dialog>
-            <Button 
+            <Button
               variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-secondary px-8 py-4 rounded-lg font-semibold text-lg transition-all"
+              className="border-2 border-white hover:bg-secondary hover:text-white text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all"
             >
               En Savoir Plus
             </Button>
