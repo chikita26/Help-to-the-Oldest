@@ -33,7 +33,7 @@ import { insertDonationSchema, type InsertDonation } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 import { Check } from "lucide-react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import FlutterwavePaymentForm from "./flutterwave-payment-form";
+import { PAYMENT_CONFIG, generateUSSDCode } from "@shared/payment-config";
 
 export default function DonationSection() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -578,14 +578,31 @@ export default function DonationSection() {
                             </div>
                           </div>
 
-                          <FlutterwavePaymentForm
-                            method={
-                              selectedPaymentMethod === "mtn" ? "MTN" : "ORANGE"
-                            }
-                            amount={donationData?.amount || ""}
-                            email={donationData?.email || ""}
-                            onSuccess={handlePaymentSuccess}
-                          />
+                          <div className="space-y-4">
+                            <div className="bg-white p-4 rounded-lg border">
+                              <h4 className="font-medium mb-2">Code USSD à composer :</h4>
+                              <code className="text-lg font-mono bg-gray-100 px-3 py-2 rounded block">
+                                {generateUSSDCode(
+                                  selectedPaymentMethod === "mtn" ? "mtn" : "orange",
+                                  donationData?.amount || ""
+                                )}
+                              </code>
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              <p className="mb-2">Instructions :</p>
+                              <ol className="list-decimal list-inside space-y-1">
+                                {PAYMENT_CONFIG[selectedPaymentMethod === "mtn" ? "mtn" : "orange"].instructions.map((instruction, index) => (
+                                  <li key={index}>{instruction}</li>
+                                ))}
+                              </ol>
+                            </div>
+                            <button
+                              onClick={handlePaymentSuccess}
+                              className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
+                            >
+                              J'ai effectué le paiement
+                            </button>
+                          </div>
                         </div>
                       )}
 
