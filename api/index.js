@@ -1,6 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,14 +62,29 @@ app.use((req, res, next) => {
   next();
 });
 
-// Register routes
+// Register API routes
 await registerRoutes(app);
+
+// Serve static files from dist/public
+const distPath = path.resolve(__dirname, "..", "dist", "public");
+
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+
+  // Fallback to index.html for client-side routing
+  app.use("*", (_req, res) => {
+    res.sendFile(path.resolve(distPath, "index.html"));
+  });
+} else {
+  console.warn(`Static files directory not found: ${distPath}`);
+}
 
 // Error handler
 app.use((err, _req, res, _next) => {
   const status = err.status || err.statusCode || 500;
   const message = err.message || "Internal Server Error";
   res.status(status).json({ message });
+  console.error(err);
 });
 
 // Export for Vercel serverless
