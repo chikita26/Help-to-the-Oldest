@@ -55,7 +55,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       req.session!.userId = user.id;
       req.session!.userRole = user.role;
 
-      res.json({ success: true, user: { id: user.id, username: user.username, role: user.role } });
+      res.json({
+        success: true,
+        user: { id: user.id, username: user.username, role: user.role },
+      });
     } catch (error) {
       res.status(500).json({ error: "Login failed" });
     }
@@ -230,7 +233,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("PayPal order creation error:", err);
       res.status(500).json({
         error: "PayPal order creation failed",
-        message: err.message
+        message: err.message,
       });
     }
   });
@@ -255,11 +258,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("PayPal order capture error:", err);
       res.status(500).json({
         error: "PayPal order capture failed",
-        message: err.message
+        message: err.message,
       });
     }
   });
-
 
   const httpServer = createServer(app);
   return httpServer;
