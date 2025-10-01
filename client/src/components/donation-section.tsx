@@ -690,7 +690,7 @@ export default function DonationSection() {
                         </div>
                         <div className="flex items-center text-xs md:text-sm text-blue-700">
                           <Clock size={14} className="mr-2" />
-                          {DONATION_CONTACT3_CONFIG.primaryContact.availability}
+                          {DONATION_CONTACT_CONFIG.primaryContact.availability}
                         </div>
                       </div>
                     </div>
